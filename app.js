@@ -5,6 +5,20 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var passport = require('passport'),
+    FacebookStrategy = require('passport-facebook').Strategy;
+
+passport.use(new FacebookStrategy({
+    clientID: "6506658916935986",
+    clientSecret: "7732ecb9b95a015ab8c9cf29be7da21",
+    callbackURL: "http://localhost:3000/abhisheksucks"
+  },
+  function(accessToken, refreshToken, profile, done){
+    //some application logic to determine user auth
+    done(null, profile)
+  }
+))
+
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
