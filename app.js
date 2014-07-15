@@ -9,15 +9,24 @@ var passport = require('passport'),
     FacebookStrategy = require('passport-facebook').Strategy;
 
 passport.use(new FacebookStrategy({
-    clientID: "6506658916935986",
-    clientSecret: "7732ecb9b95a015ab8c9cf29be7da21",
-    callbackURL: "http://localhost:3000/abhisheksucks"
+    clientID: "650665891695986",
+    clientSecret: "a7732ecb9b95a015ab8c9cf29be7da21",
+    callbackURL: "http://localhost:3000/auth/facebook/callback"
   },
   function(accessToken, refreshToken, profile, done){
     //some application logic to determine user auth
+    console.log(profile);
     done(null, profile)
   }
 ))
+
+passport.serializeUser(function(user, done) {
+    done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+    done(null, user);
+});
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -33,6 +42,8 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
+app.use(passport.initialize())
+app.use(passport.session())
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
