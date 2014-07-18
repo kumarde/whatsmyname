@@ -4,7 +4,7 @@ var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+var graph = require('fbgraph');
 var passport = require('passport'),
     FacebookStrategy = require('passport-facebook').Strategy;
 
@@ -16,7 +16,21 @@ passport.use(new FacebookStrategy({
   function(accessToken, refreshToken, profile, done){
     //some application logic to determine user auth
     console.log(profile);
+
+    graph.setAccessToken(accessToken)
+  
+    var params = {fields: "id, name, picture, gender"};
+
+    //graph.get("me", params, function(err, res) {
+    //  console.log(res)
+    //});
+    
+    graph.get("/me/friends",  function(err, res) {
+      console.log(res)
+    });
+
     done(null, profile)
+  
   }
 ))
 

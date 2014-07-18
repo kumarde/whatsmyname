@@ -11,6 +11,7 @@ router.get('/auth/facebook', passport.authenticate('facebook'));
 
 router.get('/auth/facebook/callback', 
   passport.authenticate('facebook', { successRedirect: '/',
-                                      failureRedirect: '/login'}));
+                                      failureRedirect: '/login',
+                                      scope: ['user_friends']   }));
     
 module.exports = router;
