@@ -21,14 +21,10 @@ passport.use(new FacebookStrategy({
   
     var params = {fields: "id, name, picture, gender"};
 
-    //graph.get("me", params, function(err, res) {
-    //  console.log(res)
-    //});
-    
-    graph.get("/me/friends",  function(err, res) {
-      console.log(res)
+    graph.get("me?fields=friends,id,name", function(err, res) {
+      console.log(res);
     });
-
+    
     done(null, profile)
   
   }

@@ -7,11 +7,10 @@ router.get('/', function(req, res) {
   res.render('index', { title: 'Express' });
 });
 
-router.get('/auth/facebook', passport.authenticate('facebook')); 
+router.get('/auth/facebook', passport.authenticate('facebook', { scope: "user_friends" })); 
 
 router.get('/auth/facebook/callback', 
   passport.authenticate('facebook', { successRedirect: '/',
-                                      failureRedirect: '/login',
-                                      scope: ['user_friends']   }));
+                                      failureRedirect: '/login'}));
     
 module.exports = router;
